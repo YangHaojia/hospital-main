@@ -141,10 +141,11 @@ header{
 /* ... 其他现有样式保持不变 ... */
 
 .home .home-right-content video {
-    width: 100%;
-    max-width: 450px;
-    margin-top: 2rem;
-    margin-bottom: 10rem; /* 与下方元素的距离 */
+    position: absolute; /* 绝对定位 */
+    bottom: 120px; /* 置于底部 */
+    right: 7%; /* 置于右侧，与右侧边缘保持与内容相同的间距 */
+    width: auto; /* 重置宽度为自动 */
+    max-width: 300px;
     border-radius: 50px; /* 视频四角圆角 */
     overflow: hidden;
     border: 1px solid var(--maincolor); /* 边框 */
