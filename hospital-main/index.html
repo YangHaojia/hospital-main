@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management Website</title>
+
+    <script src="https://kit.fontawesome.com/c1df782baf.js"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body> 
+
+    <header>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="images/logo3.png" alt="Hospital Logo" style="height: 40px;"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#service">Service</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary text-white" href="#contact">Make Appointment</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- header section ended -->
+
+    <!-- Home section started -->
+ <main id="app">
+        <section class="main-home" id="home">
+            <div class="home">
+                <div class="home-left-content">
+                    <span>welcome to hospital management</span>
+                    <h2>We take care our<br> Patients Healths</h2>
+                    <p class="lorem">Welcome to our hospital where we prioritize your health, ensuring exceptional care with true expertise and compassion.</p>
+                    <div class="home-btn">
+                        <a href="#about">Read More</a>
+                        <a class="homebtnsec" href="#contact">Appointment</a>
+                    </div>
+                </div>
+                <div class="home-right-content">
+                    <img src="images/hero2.png" alt="Healthcare professional">
+                    <video controls aria-label="Hospital introduction video">
+                        <source src="images/intro.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+
+         <section class="technology">
+            <div class="main-technology">
+                <div class="inner-technology">
+                    <i class="fi fi-tr-hands-heart"></i>
+                    <h2>Quality & Safety</h2>
+                    <p>Our Delmont hospital utilizes state of the art technology and employs a team of true experts.</p>
+                </div>
+                <div class="inner-technology">
+                    <i class="fi fi-rr-doctor"></i>
+                    <h2>Leading Technology</h2>
+                    <p>Advanced medical equipment ensures precise diagnostics and effective treatments.</p>
+                </div>
+                <div class="inner-technology">
+                    <i class="fi fi-tr-user-md"></i>
+                    <h2>Expert Doctors</h2>
+                    <p>Our team of specialists is dedicated to providing exceptional care.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-about" id="about">
+            <div class="about-heading">About Us</div>
+            <div class="inner-main-about">
+                <div class="about-inner-content-left">
+                    <img src="images/about1.png" alt="Hospital facility">
+                </div>
+                <div class="about-inner-content">
+                    <div class="about-right-content">
+                        <article role="article">
+                            <h2>We're setting Standards in Research <br> what's more, Clinical Care.</h2>
+                            <p>We provide the most full medical services, so every person could have the opportunity to receive qualitative medical help.</p>
+                            <p class="aboutsec-content">
+                                Our Clinic has grown to provide a world class facility for the treatment of tooth loss, dental cosmetics and advanced restorative dentistry.
+                            </p>
+                            <button class="aboutbtn">Read More</button>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- About us section ends -->
+
+    <!-- our doctors -->
+
+       <section class="main-doctors" id="doctors">
+            <div class="doctors-heading">
+                <h2>Our Doctors</h2>
+                <input type="text" v-model="searchQuery" placeholder="Search doctors by name or specialty" class="form-control w-50 mx-auto mb-3">
+            </div>
+            <div class="main-inner-doctor">
+                <div class="doc-poster" v-for="doctor in filteredDoctors" :key="doctor.id">
+                    <div class="doc-icons">
+                        <i class="fa-solid fa-share"></i>
+                        <i class="fa-solid fa-eye"></i>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <img :src="doctor.image" :alt="doctor.name">
+                    <div class="doc-details">
+                        <h2>{{ doctor.name }}</h2>
+                        <p v-if="activeDoctor === doctor.id">{{ doctor.specialty }}</p>
+                        <p v-else-if="activeDoctor === null">Click to view specialty</p>
+                        <button @click="toggleDoctor(doctor.id)">Toggle Details</button>
+                        <i class="fa-brands fa-linkedin"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="our-service" id="service">
+    <div class="service-heading">
+        <h2>Our Services</h2>
+    </div>
+    <div class="main-services">
+        <div class="inner-services" v-for="service in services" :key="service.title">
+            <div class="service-icon">
+                <img :src="service.icon" :alt="service.title">
+            </div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+        </div>
+    </div>
+</section>
+
+      <section class="main-review" id="reviews">
+    <div class="review-heading">
+        <h1>Our Customers Review</h1>
+    </div>
+    <div class="review-inner-content">
+        <review-card v-for="review in reviews" :key="review.id" :review="review"></review-card>
+    </div>
+</section>
+
+    <!-- our services ended -->
+ <transition name="fade">
+            <section class="contact" id="contact" v-show="showForm">
+                <div class="contact-heading">
+                    <h2>Contact Us</h2>
+                </div>
+                <form role="form" @submit.prevent="submitForm">
+                    <input type="text" v-model="name" placeholder="Your Name" required>
+                    <input type="email" v-model="email" placeholder="Your Email" required>
+                    <textarea v-model="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+        </transition>
+    
+        </div>
+    
+   
+    <!-- 轮播图部分 -->
+   <section class="carousel-section">
+            <div class="container">
+                <h2>What our customers are saying</h2>
+                <hr>
+                <div class="carousel">
+                    <div class="carousel-slides">
+                        <div class="slide active">
+                            <img src="images/person-image.png" alt="Customer 1">
+                            <div class="slide-content">
+                                <h3>John Doe</h3>
+                                <p>Founder Circle</p>
+                                <p>"Our dedicated patient engagement app and web portal allow you to access information instantaneously and securely."</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="images/pic1.png" alt="Customer 2">
+                            <div class="slide-content">
+                                <h3>Jane Smith</h3>
+                                <p>CEO HealthNet</p>
+                                <p>"The service is exceptional, providing quick and secure access to medical records."</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="images/pic2.png" alt="Customer 3">
+                            <div class="slide-content">
+                                <h3>Mike Johnson</h3>
+                                <p>Patient Advocate</p>
+                                <p>"Highly recommend this platform for its user-friendly interface and support."</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="images/pic3.png" alt="Customer 4">
+                            <div class="slide-content">
+                                <h3>Sarah Lee</h3>
+                                <p>Medical Consultant</p>
+                                <p>"Efficient and reliable healthcare solutions at your fingertips."</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="images/person-image.png" alt="Customer 5">
+                            <div class="slide-content">
+                                <h3>Robert Brown</h3>
+                                <p>IT Specialist</p>
+                                <p>"Secure and fast access to health information has transformed our workflow."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+        </section>
+    <!-- 手风琴组件 -->
+ <section class="accordion-section">
+            <div class="container">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                How do I make an appointment?
+                            </button>
+                        </div>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>You can make an appointment by clicking the "Make Appointment" button or filling out the contact form.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                What services do you offer?
+                            </button>
+                        </div>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>We offer health check-ups, specialist consultations, dental care, lab tests, and more.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                Do you accept insurance?
+                            </button>
+                        </div>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>We accept most major insurance plans. Contact our billing department for details.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                What are your operating hours?
+                            </button>
+                        </div>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Monday to Friday: 8:00 AM to 8:00 PM; Saturday: 9:00 AM to 5:00 PM.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                How can I access my medical records?
+                            </button>
+                        </div>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Access your records via our patient engagement app or web portal.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
+                                How do I contact the hospital for emergencies?
+                            </button>
+                        </div>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Call our 24/7 hotline at [emergency number] or visit our emergency department.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+         <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">Form Submitted</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Thank you, {{ name }}! Your message has been sent.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+    <!-- footer -->
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+                <h1>About Us</h1>
+                <div class="link">
+                    <a href="#about">Our Mission</a>
+                    <a href="#doctors">Our Team</a>
+                    <a href="#service">Services</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-content">
+                <h1>Patient Resources</h1>
+                <div class="link">
+                    <a href="#contact">Make Appointment</a>
+                    <a href="#service">Insurance Info</a>
+                    <a href="#reviews">Patient Reviews</a>
+                </div>
+            </div>
+            <div class="footer-content">
+                <h1>Contact Info</h1>
+                <div class="link">
+                    <a href="mailto:info@hospital.com">info@hospital.com</a>
+                    <a href="tel:+1234567890">+1 234 567 890</a>
+                    <a href="#contact">Contact Form</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        
+    <!-- footer ended -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
